@@ -2,29 +2,25 @@ package dgg.com;
 
 import static com.codeborne.selenide.Condition.*;
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
-public class DND_Git {
+public class DragAndDropGitTests {
 
         @BeforeAll
         static void beforeAll() {
             Configuration.startMaximized = true;
         }
 
-        @AfterEach
-        void afterEach() {
-            Selenide.closeWebDriver();
-        }
-
         @Test
         void gitHubWikiTest(){
             open("https://github.com/selenide/selenide");
             $("#wiki-tab").click();
-            $("#wiki-body .markdown-body ul").$(byText("Soft assertions")).click();
-            $("#wiki-content").shouldHave(text("Using JUnit5"));
+            $(".wiki-more-pages-link .btn-link").scrollTo().click();
+            $(".wiki-more-pages").shouldBe(visible);
+            $("#wiki-pages-box").$(byText("SoftAssertions")).click();
+            $("#wiki-content").shouldHave(text("Using JUnit5 extend test class:"));
         }
 
         @Test
@@ -33,7 +29,5 @@ public class DND_Git {
             $("#column-a").dragAndDropTo("#column-b");
             $("#column-a").shouldHave(text("b"));
         }
-
-
     }
 
